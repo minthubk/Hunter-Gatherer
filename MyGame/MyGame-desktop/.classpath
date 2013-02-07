@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MyGame"/>
-	<classpathentry kind="lib" path="C:/Users/fmo1124/Documents/Projektarbete/libgdx-nightly-latest/extensions/gdx-tools.jar"/>
+	<classpathentry kind="lib" path="C:/libs/gdx-tools.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

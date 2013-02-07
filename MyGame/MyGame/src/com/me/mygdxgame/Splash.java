@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Splash implements Screen
 {
-	
 	private Texture logo;
 	private SpriteBatch spriteBatch;
 	private MyGdxGame game;
@@ -19,7 +18,6 @@ public class Splash implements Screen
 		this.game = game;		
 	}
 	
-	
 	@Override
 	public void render (float delta)
 	{
@@ -27,8 +25,7 @@ public class Splash implements Screen
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		spriteBatch.begin();
-		//System.out.printf("Rendering Logo.. \n");
-		spriteBatch.draw(logo, 0, 0);//, GameClass.WIDTH, GameClass.HEIGHT);
+		spriteBatch.draw(logo, 0, 0);
 		spriteBatch.end();
 		handleInput();		
 	}
@@ -37,7 +34,6 @@ public class Splash implements Screen
 	{
 		if(Gdx.input.justTouched())
 		{
-			System.out.printf("Changing to menu screen.. \n");
 			game.setScreen(game.mainMenu);
 		}
 	}
@@ -45,34 +41,35 @@ public class Splash implements Screen
 	@Override
     public void show()
 	{
-    	System.out.printf("Creating logo..  - splash.png \n");
-		logo = new Texture ( Gdx.files.internal("data/splash.png"));
+    	logo = new Texture ( Gdx.files.internal("data/splash.png"));
 		spriteBatch = new SpriteBatch();
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height) 
+    {
     }
 
    @Override
-    public void hide() {
-         // called when current screen changes from this to a different screen
-    }
-
-
-   @Override
-    public void pause() {
-    }
-
-
-   @Override
-    public void resume() {
-    }
-
-
-    public void dispose() 
+   public void hide() 
    {
-            // never called automatically
-    }
+   }
+
+
+   @Override
+   public void pause() 
+   {
+   }
+
+
+   @Override
+   public void resume() 
+   {
+   }
+
+
+   public void dispose() 
+   {
+   }
 	
 }

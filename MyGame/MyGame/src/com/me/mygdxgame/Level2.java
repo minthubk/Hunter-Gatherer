@@ -1,10 +1,7 @@
 package com.me.mygdxgame;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-//import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,7 +27,6 @@ public class Level2 implements Screen {
 	private Rectangle gubbe;
 	private Rectangle pekare;
 	private Rectangle grass;
-	//private BitmapFont font;
 	private Rectangle tree;
 	private Rectangle road;
 	private Rectangle house;
@@ -38,9 +34,8 @@ public class Level2 implements Screen {
 	public static int WIDTH;
 	public static int HEIGHT;
 	
-	float score;
 	long lastLogSpawn;
-
+	
 	int xvel = 2;
 	int yvel = 2;
 	
@@ -50,6 +45,7 @@ public class Level2 implements Screen {
 		this.game = game;		
 	}
 	
+	//Map
 	int[][] map = new int[][] {	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 								{1,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1},
 								{1,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1},
@@ -65,25 +61,22 @@ public class Level2 implements Screen {
 								// 1 = tree
 								// 2 = road
 								// 3 = house
-								// 4 = null
+								// 4 = change map
 								// 5 = null
 	
-	
 	@Override
-	public void render(float delta) {
-		
-		
+	public void render(float delta) 
+	{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
-			
-		//font.setColor(0.0f, 0.0f, 1.0f, 1.0f);
 		
 		batch.setProjectionMatrix(camera.combined);
+		
 		batch.begin();
 
-		//rita ut texturer-funktion
+		//Some texture drawing
 		for(int i=0;i<10;i++)
 		{
 			for(int j=0;j<16;j++)
@@ -122,7 +115,7 @@ public class Level2 implements Screen {
 		
 		batch.draw(Gubbe, gubbe.x, gubbe.y);
 
-		//Input
+		//Touch-Input
 		if(Gdx.input.isTouched())
 		{
 			Vector3 touchPos = new Vector3();
@@ -130,119 +123,109 @@ public class Level2 implements Screen {
 			camera.unproject(touchPos);
 			pekare.x = touchPos.x -6;
 			pekare.y = touchPos.y -32;
-			//batch.draw(Pekare, pekare.x, pekare.y);
 		}
 		
+		Movement();
+		
+		batch.end();
+	}
+	
+	private void Movement()
+	{
 		int x = (int)gubbe.x;
 		int y = (int)gubbe.y;
-		//Spawn logs
-		//if(TimeUtils.nanoTime() - lastLogSpawn > 2100000000) spawnLog();
-		
+	
 		if (map[y/48][x/48] == 4)
 		{
 			game.setScreen(game.gameScreen);
 		}
-		
-				xvel=2;
-				yvel=2;
-				//System.out.print(map[((int)gubbe.y+48)/48][(int)gubbe.x/48]);
-				if( (gubbe.x < (int)pekare.x) && ( ( (map[y/48][(x+48)/48] == 0) || (map[(y+48)/48][(x+48)/48] == 0) ) || ( (map[y/48][(x+48)/48] == 2) || (map[(y+48)/48][(x+48)/48] == 2) ) ) ) {
-					gubbe.x += xvel;
-					if ( ( ( (map[y/48][(x+48)/48] != 0) || (map[(y+48)/48][(x+48)/48] != 0) ) == true ) && ( ( (map[y/48][(x+48)/48] != 2) || (map[(y+48)/48][(x+48)/48] != 2) ) == true ) )
-					{
-						xvel = 0;
-						gubbe.x -= 2;
-					}
-					xvel=2;
-				}
-				if((gubbe.x > (int)pekare.x ) && ( ( (map[(y+48)/48][x/48] == 0) || (map[y/48][x/48] == 0) ) || ( (map[(y+48)/48][x/48] == 2) || (map[y/48][x/48] == 2) ) ) ) {
-					gubbe.x -= xvel;
-					if( ( ( (map[y/48][x/48] != 0) || (map[(y+48)/48][x/48] != 0) ) == true ) && ( ( (map[y/48][x/48] != 2) || (map[(y+48)/48][x/48] != 2) ) == true ) )
-					{
-						xvel=0;	
-						gubbe.x += 2;
-										
-					}
-					xvel=2;
-					
-				}
-				if( (gubbe.y < (int)pekare.y ) && ( ( (map[(y+48)/48][x/48] == 0) || (map[(y+48)/48][(x+48)/48] == 0) ) || ( (map[(y+48)/48][(x+48)/48] == 2) || (map[(y+48)/48][(x/48)] == 2) ) ) ) {
-					gubbe.y += yvel;
-					if( ( ( (map[(y+48)/48][x/48] != 0) || (map[(y+48)/48][(x+48)/48] != 0) ) == true ) && ( ( (map[(y+48)/48][x/48] != 2) || (map[(y+48)/48][(x+48)/48] != 2) ) == true ) )
-					{
-						yvel = 0;
-						gubbe.y -= 2;
-					}
-					yvel=2;
-				}
-				if( (gubbe.y > (int)pekare.y) && ( ( (map[y/48][x/48] == 0) || (map[y/48][(x+48)/48] == 0) ) || ( (map[y/48][x/48] == 2) || (map[y/48][(x+48)/48] == 2) ) ) ) {
-					gubbe.y -= yvel;
-					if( ( ( (map[y/48][x/48] != 0) || (map[y/48][(x+48)/48] != 0) ) == true ) && ( ( (map[y/48][x/48] != 2) || (map[y/48][(x+48)/48] != 2) ) == true ) )
-					{
-						yvel=0;
-						gubbe.y += 2;
-					}
-					yvel=2;
-				}
+	
+		xvel = 0;
+		yvel = 0;
 
-			/*
-			case 1:
-			{
-				spawnLog();
-				map[y][x] = 0;
-				break;
-			}
-			case 2:
-			{
-				xvel=3;
-				yvel=3;
-				if(gubbe.x < pekare.x)
-					gubbe.x += xvel;
-				if(gubbe.x > pekare.x)
-					gubbe.x -=xvel;
-				if(gubbe.y < pekare.y)
-					gubbe.y +=yvel;
-				if(gubbe.y > pekare.y)
-					gubbe.y -=yvel;
-				break;
-			}
-			default:
-				break;
-		}*/
+		/* Walking to the right. */
+		if ((gubbe.x < (int)pekare.x) &&
+			((map[y/48][(x+48)/48] == 0) ||
+			 (map[(y+48)/48][(x+48)/48] == 0)) ||
+			((map[y/48][x/48] == 0) ||
+			 (map[(y+48)/48][x/48] == 0)))
+	 	{
+			xvel = 1;
 		
-		//WTF½!!!??!?!??!?!?
-		//font.draw(batch, "HEJSAN", 50, 120);
-		
-		//här slutar bilderna målas..
-		batch.end();
-		
-		//Destroy coins
-		Iterator<Rectangle> iter = logs.iterator();
-		while(iter.hasNext())
-		{
-			Rectangle log = iter.next();
-			if(log.overlaps(gubbe))
+			/* Non-walkable tiles. */
+			if ((map[y/48][(x+48)/48] != 0) ||
+				(map[(y+48)/48][(x+48)/48] != 0))
 			{
-				iter.remove();
-				score +=1;
+				xvel = 0;
+				x-=2;
 			}
 		}
-
+	
+		/* Walking to the left. */
+		if ((gubbe.x > (int)pekare.x ) &&
+		    (((map[(y+48)/48][x/48] == 0) ||
+		      (map[y/48][x/48] == 0)) ||
+	         ((map[(y+48)/48][(x+48)/48] == 0) ||
+		      (map[y/48][(x+48)/48] == 0))))
+		{
+			xvel = -1;
 		
+			/* Non-walkable tiles. */
+			if ((map[y/48][x/48] != 0) ||
+				(map[(y+48)/48][x/48] != 0))
+			{
+				xvel = 0;
+				x+=2;
+			}
+		}
+	
+		/* Walking upwards. */
+		if ((gubbe.y < (int)pekare.y ) &&
+              (((map[(y+48)/48][x/48] == 0) ||
+	            (map[(y+48)/48][(x+48)/48] == 0)) ||
+	           ((map[(y)/48][(x+48)/48] == 0) ||
+	            (map[(y)/48][(x/48)] == 0))))
+		{
+			yvel = 1;
+		
+			/* Non-walkable tiles. */
+			if ((map[(y+48)/48][x/48] != 0) || 
+				(map[(y+48)/48][(x+48)/48] != 0))
+			{
+				yvel = 0;
+				y-=2;
+			}
+		}
+	
+		/* Walking downwards. */
+		if( (gubbe.y > (int)pekare.y) &&
+			(((map[y/48][x/48] == 0) || 
+			  (map[y/48][(x+48)/48] == 0)) || 
+			 ((map[(y+48)/48][x/48] == 0) || 
+			  (map[(y+48)/48][(x+48)/48] == 0)))) {
+			yvel = -1;
+		
+			/* Non-walkable tiles. */
+			if ((map[y/48][x/48] != 0) ||
+				(map[y/48][(x+48)/48] != 0))
+			{
+				yvel=0;
+				y+=2;
+			}
+		}
+	
+		gubbe.x += xvel;
+		gubbe.y += yvel;
 	}
-	
-	
-	
+
 	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+	public void resize(int width, int height) 
+	{
 	}
 
 	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
+	public void show() 
+	{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 768, 480);
 			
@@ -269,25 +252,24 @@ public class Level2 implements Screen {
 		Tree.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Log.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
+		/*Texture settings*/
+		
 		house = new Rectangle();
 		house.width = 144;
 		house.height = 96;
 		
-		//Gubbe settings
 		gubbe = new Rectangle();
 		gubbe.x = 768 / 2 - 48 / 2;
 		gubbe.y = 480 / 2 - 48 / 2;
 		gubbe.width = 48;
 		gubbe.height = 48;
 		
-		//Pekare settings
 		pekare = new Rectangle();
 		pekare.x = gubbe.x;
 		pekare.y = gubbe.y;
 		pekare.width = 48;
 		pekare.height = 48;
 		
-		//grass texture 
 		grass = new Rectangle();
 		grass.width = 48;
 		grass.height = 48;
@@ -296,36 +278,29 @@ public class Level2 implements Screen {
 		road.width = 48;
 		road.height = 48;
 		
-		//tree texture
 		tree = new Rectangle();
 		tree.width = 48;
 		tree.height = 48;
-		
-		logs = new Array<Rectangle>();
-		
 	}
 
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
+	public void hide() 
+	{
 	}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
+	public void pause() 
+	{
 	}
 
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
+	public void resume() 
+	{	
 	}
 
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
+	public void dispose() 
+	{
 		Log.dispose();
 		Pekare.dispose();
 		batch.dispose();

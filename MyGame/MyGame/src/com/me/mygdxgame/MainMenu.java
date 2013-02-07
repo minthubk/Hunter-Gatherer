@@ -21,7 +21,6 @@ public class MainMenu implements Screen
 		this.game = game;
 	}
 	
-	
 	@Override
 	public void render (float delta)
 	{
@@ -59,29 +58,31 @@ public class MainMenu implements Screen
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height) 
+    {
     }
 
  
    @Override
-    public void hide() {
-         // called when current screen changes from this to a different screen
-    }
-
-
-   @Override
-    public void pause() {
-    }
-
-
-   @Override
-    public void resume() {
-    }
-
-
-    public void dispose() 
+   public void hide() 
    {
-            // never called automatically
-    }
+   }
+
+
+   @Override
+   public void pause() 
+   {
+   }
+
+
+   @Override
+   public void resume() 
+   {
+   }
+
+
+   public void dispose() 
+   {
+   }
 	
 }
