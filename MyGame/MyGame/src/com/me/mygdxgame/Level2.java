@@ -1,3 +1,5 @@
+/* Just saved as backup if i mess up :) */
+
 package com.me.mygdxgame;
 
 import com.badlogic.gdx.Gdx;
@@ -45,7 +47,8 @@ public class Level2 implements Screen {
 		this.game = game;		
 	}
 	
-	//Map
+	Level1 gameScreen = new Level1(game);
+	//Map - old map system
 	int[][] map = new int[][] {	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 								{1,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1},
 								{1,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1},
@@ -56,7 +59,7 @@ public class Level2 implements Screen {
 								{4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
 								{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
-	
+
 								// 0 = grass
 								// 1 = tree
 								// 2 = road
@@ -137,7 +140,7 @@ public class Level2 implements Screen {
 	
 		if (map[y/48][x/48] == 4)
 		{
-			game.setScreen(game.gameScreen);
+			game.setScreen(gameScreen);
 		}
 	
 		xvel = 0;

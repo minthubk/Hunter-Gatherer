@@ -1,4 +1,5 @@
 //http://steigert.blogspot.se/2012/03/4-libgdx-tutorial-tablelayout.html
+/* COMING SOON (TODO)*/
 
 package com.me.mygdxgame;
 
@@ -15,11 +16,13 @@ public class MainMenu implements Screen
 	private Texture info;
 	private Texture exitgame;
 	private SpriteBatch spriteBatch;
+	
 	private MyGdxGame game;
 	public MainMenu (MyGdxGame game)
 	{
 		this.game = game;
 	}
+	Level1 gameScreen = new Level1(game);
 	
 	@Override
 	public void render (float delta)
@@ -28,12 +31,12 @@ public class MainMenu implements Screen
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		spriteBatch.begin();
-		//System.out.printf("Rendering Logo.. \n");
-		spriteBatch.draw(background, 0, 0);//, GameClass.WIDTH, GameClass.HEIGHT);
+		spriteBatch.draw(background, 0, 0);
 		spriteBatch.draw(startgame, 280, 330);
 		spriteBatch.draw(info, 280, 210);
 		spriteBatch.draw(exitgame, 280, 90);
 		spriteBatch.end();
+		
 		handleInput();
 	}
 
@@ -42,7 +45,7 @@ public class MainMenu implements Screen
 		if(Gdx.input.justTouched())
 		{
 			System.out.printf("Changing to game screen.. \n");
-			game.setScreen(game.gameScreen);
+			game.setScreen(gameScreen);
 		}
 	}
 	

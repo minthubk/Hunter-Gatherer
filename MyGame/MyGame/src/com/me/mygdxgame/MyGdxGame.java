@@ -10,6 +10,7 @@ public class MyGdxGame extends Game implements ApplicationListener
 	Level1 gameScreen;
 	MainMenu mainMenu;
 	Level2 level2;
+	Map gamemap;
 	
 	@Override
 	public void create()
@@ -18,7 +19,7 @@ public class MyGdxGame extends Game implements ApplicationListener
 		gameScreen = new Level1(this);
 		level2 = new Level2(this);
 		mainMenu = new MainMenu(this);
-		
+		gamemap = new Map();
 		Texture.setEnforcePotImages(false);
 		setScreen(splashScreen);		
 	}
