@@ -1,4 +1,8 @@
-/* Just saved as backup if i mess up :) */
+/* 
+ * (TODO) Battle scene
+ * 
+ * http://fysikhjalp.se/rorelse/kastrorelse/kastrorelse_harledning_sida.html  
+*/
 
 package com.me.mygdxgame;
 
@@ -24,9 +28,11 @@ public class Level2 implements Screen {
 	private Texture Pekare;
 	private Texture Grass;
 	private Texture Road;
+	private Texture Wolf;
 	private Texture Tree;
 	private Array<Rectangle> logs;
 	private Rectangle gubbe;
+	private Rectangle wolf;
 	private Rectangle pekare;
 	private Rectangle grass;
 	private Rectangle tree;
@@ -41,42 +47,27 @@ public class Level2 implements Screen {
 	int xvel = 2;
 	int yvel = 2;
 	
-	private MyGdxGame game;
+	MyGdxGame game;
 	public Level2 (MyGdxGame game)
 	{
 		this.game = game;		
 	}
 	
+	Map gamemap = new Map();
 	Level1 gameScreen = new Level1(game);
-	//Map - old map system
-	int[][] map = new int[][] {	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-								{1,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1},
-								{1,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1},
-								{1,0,3,5,5,0,1,0,0,1,0,1,1,0,1,1},
-								{1,0,5,5,5,0,0,0,0,1,1,1,0,0,0,1},
-								{1,0,1,1,0,0,0,0,0,1,1,1,0,0,0,1},
-								{4,0,0,0,1,0,1,0,0,1,1,1,0,0,1,1},
-								{4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-								{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
-
-								// 0 = grass
-								// 1 = tree
-								// 2 = road
-								// 3 = house
-								// 4 = change map
-								// 5 = null
+	Gamedata data = new Gamedata();
+	Movement movement = new Movement();
 	
 	@Override
 	public void render(float delta) 
 	{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gamedata.CurrentLevel = 3;
+		int[]map = gamemap.StringToInt();
 		
 		camera.update();
-		
 		batch.setProjectionMatrix(camera.combined);
-		
 		batch.begin();
 
 		//Some texture drawing
@@ -92,7 +83,7 @@ public class Level2 implements Screen {
 		{
 			for(int j=0;j<16;j++)
 			{
-				int mapx = map[i][j];
+				int mapx = map[i*data.WIDTH+j];
 				int v = i*48;
 				int c = j*48;
 				
@@ -128,97 +119,9 @@ public class Level2 implements Screen {
 			pekare.y = touchPos.y -32;
 		}
 		
-		Movement();
+		movement.collision();
 		
 		batch.end();
-	}
-	
-	private void Movement()
-	{
-		int x = (int)gubbe.x;
-		int y = (int)gubbe.y;
-	
-		if (map[y/48][x/48] == 4)
-		{
-			game.setScreen(gameScreen);
-		}
-	
-		xvel = 0;
-		yvel = 0;
-
-		/* Walking to the right. */
-		if ((gubbe.x < (int)pekare.x) &&
-			((map[y/48][(x+48)/48] == 0) ||
-			 (map[(y+48)/48][(x+48)/48] == 0)) ||
-			((map[y/48][x/48] == 0) ||
-			 (map[(y+48)/48][x/48] == 0)))
-	 	{
-			xvel = 1;
-		
-			/* Non-walkable tiles. */
-			if ((map[y/48][(x+48)/48] != 0) ||
-				(map[(y+48)/48][(x+48)/48] != 0))
-			{
-				xvel = 0;
-				x-=2;
-			}
-		}
-	
-		/* Walking to the left. */
-		if ((gubbe.x > (int)pekare.x ) &&
-		    (((map[(y+48)/48][x/48] == 0) ||
-		      (map[y/48][x/48] == 0)) ||
-	         ((map[(y+48)/48][(x+48)/48] == 0) ||
-		      (map[y/48][(x+48)/48] == 0))))
-		{
-			xvel = -1;
-		
-			/* Non-walkable tiles. */
-			if ((map[y/48][x/48] != 0) ||
-				(map[(y+48)/48][x/48] != 0))
-			{
-				xvel = 0;
-				x+=2;
-			}
-		}
-	
-		/* Walking upwards. */
-		if ((gubbe.y < (int)pekare.y ) &&
-              (((map[(y+48)/48][x/48] == 0) ||
-	            (map[(y+48)/48][(x+48)/48] == 0)) ||
-	           ((map[(y)/48][(x+48)/48] == 0) ||
-	            (map[(y)/48][(x/48)] == 0))))
-		{
-			yvel = 1;
-		
-			/* Non-walkable tiles. */
-			if ((map[(y+48)/48][x/48] != 0) || 
-				(map[(y+48)/48][(x+48)/48] != 0))
-			{
-				yvel = 0;
-				y-=2;
-			}
-		}
-	
-		/* Walking downwards. */
-		if( (gubbe.y > (int)pekare.y) &&
-			(((map[y/48][x/48] == 0) || 
-			  (map[y/48][(x+48)/48] == 0)) || 
-			 ((map[(y+48)/48][x/48] == 0) || 
-			  (map[(y+48)/48][(x+48)/48] == 0)))) {
-			yvel = -1;
-		
-			/* Non-walkable tiles. */
-			if ((map[y/48][x/48] != 0) ||
-				(map[y/48][(x+48)/48] != 0))
-			{
-				yvel=0;
-				y+=2;
-			}
-		}
-	
-		gubbe.x += xvel;
-		gubbe.y += yvel;
 	}
 
 	@Override
@@ -242,6 +145,7 @@ public class Level2 implements Screen {
 		Pekare = new Texture(Gdx.files.internal("pekare.png"));
 		Tree  = new Texture(Gdx.files.internal("data/tree.png"));
 		House = new Texture(Gdx.files.internal("data/hus.png"));
+		Wolf = new Texture(Gdx.files.internal("data/wolfleft.png"));
 
 		this.Grass = new Texture(Gdx.files.internal ("data/grass.png"));
 		this.Grass.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
@@ -266,6 +170,8 @@ public class Level2 implements Screen {
 		gubbe.y = 480 / 2 - 48 / 2;
 		gubbe.width = 48;
 		gubbe.height = 48;
+		
+		wolf = new Rectangle();
 		
 		pekare = new Rectangle();
 		pekare.x = gubbe.x;

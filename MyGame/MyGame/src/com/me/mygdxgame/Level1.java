@@ -20,6 +20,7 @@ public class Level1 implements Screen
 	Texture Log;
 	Texture Gubbe;
 	Texture House;
+	Texture Wolf;
 	Texture Pekare;
 	Texture Grass;
 	Texture Road;
@@ -28,21 +29,22 @@ public class Level1 implements Screen
 	Rectangle gubbe;
 	Rectangle pekare;
 	Rectangle grass;
+	Rectangle wolf;
 	Rectangle tree;
 	Rectangle road;
 	Rectangle house;
 		
 	int ScreenWIDTH;
 	int ScreenHEIGHT;
-	
-	private MyGdxGame game;
+	MyGdxGame game;
 	public Level1 (MyGdxGame game)
 	{
 		this.game = game;
 	}
 	
 	Gamedata data = new Gamedata();
-	Map gamemap = new Map();	
+	Map gamemap = new Map();
+	Movement movement = new Movement();
 	
 	@Override
 	public void render(float delta) 
@@ -50,11 +52,8 @@ public class Level1 implements Screen
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		int[]map = gamemap.StringToInt();
-		
 		camera.update();
-		
 		batch.setProjectionMatrix(camera.combined);
-		
 		batch.begin();
 		
 		for(int i=0;i<10;i++)
@@ -91,6 +90,8 @@ public class Level1 implements Screen
 		
 		batch.draw(Gubbe, gubbe.x, gubbe.y);
 		
+		batch.draw(Wolf, wolf.x, wolf.y);
+		
 		if(Gdx.input.isTouched())
 		{
 			Vector3 touchPos = new Vector3();
@@ -100,14 +101,18 @@ public class Level1 implements Screen
 			pekare.y = touchPos.y -32;
 		}
 		
-		Movement movement = new Movement();
+		//Movement movement = new movement;
 		movement.gx = (int)gubbe.x;
 		movement.gy = (int)gubbe.y;
 		movement.px = (int)pekare.x;
 		movement.py = (int)pekare.y;
+		movement.wx = (int)wolf.x;
+		movement.wy = (int)wolf.y;
 		
 		movement.collision();
 		
+		wolf.x = movement.wx;
+		wolf.y = movement.wy;
 		gubbe.x = movement.gx;
 		gubbe.y = movement.gy;
 		pekare.x = movement.px;
@@ -134,7 +139,6 @@ public class Level1 implements Screen
 	{
 	}
 	
-	
 	public float data()
 	{
 		//Texture settings
@@ -147,6 +151,12 @@ public class Level1 implements Screen
 		gubbe.y = 480 / 2 - 48 / 2;
 		gubbe.width = 48;
 		gubbe.height = 48;
+		
+		wolf = new Rectangle();
+		wolf.x = 768-48;
+		wolf.y = 480/2;
+		wolf.width = 48;
+		wolf.height = 48;
 		
 		pekare = new Rectangle();
 		pekare.x = gubbe.x;
@@ -180,7 +190,8 @@ public class Level1 implements Screen
 		Pekare = new Texture(Gdx.files.internal("pekare.png"));
 		Tree  = new Texture(Gdx.files.internal("data/tree.png"));
 		House = new Texture(Gdx.files.internal("data/hus.png"));
-
+		Wolf = new Texture(Gdx.files.internal("data/wolfleft.png"));
+		
 		Grass = new Texture(Gdx.files.internal ("data/grass.png"));
 		Grass.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 		Grass.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -192,6 +203,7 @@ public class Level1 implements Screen
 		Grass.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Tree.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Log.setFilter(TextureFilter.Linear, TextureFilter.Linear);		
+		Wolf.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		data();
 		
@@ -200,8 +212,6 @@ public class Level1 implements Screen
 			
 		ScreenWIDTH = Gdx.graphics.getWidth();
 		ScreenHEIGHT = Gdx.graphics.getHeight();
-		
-
 	}
 
 	@Override

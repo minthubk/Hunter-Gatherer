@@ -15,8 +15,9 @@ public class Splash implements Screen
 	private MyGdxGame game;
 	public Splash (MyGdxGame game)
 	{
-		this.game = game;		
+		this.game = game;
 	}
+	Gamedata data = new Gamedata();
 	
 	@Override
 	public void render (float delta)
@@ -27,13 +28,14 @@ public class Splash implements Screen
 		spriteBatch.begin();
 		spriteBatch.draw(logo, 0, 0);
 		spriteBatch.end();
-		handleInput();		
+		handleInput();
 	}
 
 	private void handleInput()
 	{
 		if(Gdx.input.justTouched())
 		{
+			data.CurrentLevel = 0;
 			game.setScreen(game.mainMenu);
 		}
 	}

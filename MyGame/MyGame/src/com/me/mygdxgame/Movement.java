@@ -1,6 +1,3 @@
-/* Only collision at the moment. */
-/* Not fully working. */
-
 package com.me.mygdxgame;
 
 public class Movement
@@ -11,7 +8,9 @@ public class Movement
 	public int gy;
 	public int px;
 	public int py;
-	
+	public int wx;
+	public int wy;
+
 	Gamedata data = new Gamedata();
 	Map gamemap = new Map();
 	
@@ -20,15 +19,32 @@ public class Movement
 		/* Collision detection goes here */
 		int[]map = gamemap.StringToInt();
 		
-		/* TODO */
-		if (map[(gy/48)*data.WIDTH+((gx+50)/48)] == 4)
+		if (map[(gy/48)*data.WIDTH+((gx+48)/48)] == 5)
 		{
-			data.level = "data/texturemap3";
+			System.out.println("Change map...");
+			Gamedata.CurrentLevel=3;
+			gx = 50;
+			//Map.level = "data/texturemap3";
+		}
+		if (map[(gy/48)*data.WIDTH+((gx)/48)] == 4)
+		{
+			System.out.println("Change map...");
+			Gamedata.CurrentLevel=2;
+			gx = 768-(48*2)-5;
+			//Map.level = "data/texturemap3";
 		}
 		
-		xvel = 0;
-		yvel = 0;
+		xvel=0;
+		yvel=0;
 	 
+		if ((gx+96) >= wx)
+		{
+			System.out.println("WOLF!!!!");
+			// (TODO)
+			// game.setScreen(game.level2);
+			wx++;
+		}
+		
 		/* Walking to the right. */
 		if ((gx < px) &&
 			((map[(gy/48)*data.WIDTH+((gx+48)/48)] == 0) ||
@@ -36,13 +52,13 @@ public class Movement
 			((map[(gy/48)*data.WIDTH+(gx/48)] == 0) ||
 			 (map[((gy+48)/48)*data.WIDTH+(gx/48)] == 0)))
 		{
-		    xvel = 1;
+		    xvel=1;
 			
 		    /* Non-walkable tiles. */
 		    if ((map[(gy/48)*data.WIDTH+((gx+48)/48)] != 0) ||
 			    (map[((gy+48)/48)*data.WIDTH+((gx+48)/48)] != 0))
 		    {
-			    xvel = 0;
+			    xvel=0;
 			    gx-=1;
 		    }
 		   }
@@ -53,13 +69,13 @@ public class Movement
 		     ((map[(gy+48)/48*data.WIDTH+(gx+48)/48] == 0) ||
 		      (map[(gy/48)*data.WIDTH+((gx+48)/48)] == 0))))
 		{
-		    xvel = -1;
+		    xvel=-1;
 		
 		    /* Non-walkable tiles. */
 			if ((map[(gy/48)*data.WIDTH+(gx/48)] != 0) ||
 			    (map[((gy+48)/48)*data.WIDTH+(gx/48)] != 0))
 			{
-			    xvel = 0;
+			    xvel=0;
 			    gx+=1;
 			}
 		}
@@ -71,13 +87,13 @@ public class Movement
 		      ((map[((gy)/48)*data.WIDTH+((gx+48)/48)] == 0) ||
 		       (map[((gy)/48)*data.WIDTH+((gx/48))] == 0))))
 		{
-		    yvel = 1;
+		    yvel=1;
 			
 		    /* Non-walkable tiles. */
 			if ((map[((gy+48)/48)*data.WIDTH+(gx/48)] != 0) || 
 			    (map[((gy+48)/48)*data.WIDTH+((gx+48)/48)] != 0))
 			{
-			    yvel = 0;
+			    yvel=0;
 			    gy-=1;
 			}
 		}
@@ -89,7 +105,7 @@ public class Movement
 		   ((map[((gy+48)/48)*data.WIDTH+(gx/48)] == 0) || 
 			(map[((gy+48)/48)*data.WIDTH+((gx+48)/48)] == 0)))) 
 		{
-		    yvel = -1;
+		    yvel=-1;
 			
 		    /* Non-walkable tiles. */
 		    if ((map[(gy/48)*data.WIDTH+(gx/48)] != 0) ||
@@ -100,7 +116,7 @@ public class Movement
 		    }
 		}
 				
-		gx += xvel;
-		gy += yvel;
+		gx+=xvel;
+		gy+=yvel;
 	}
 }
