@@ -10,6 +10,8 @@ public class Movement
 	public int py;
 	public int wx;
 	public int wy;
+	public int sx;
+	public int sy;
 
 	Gamedata data = new Gamedata();
 	Map gamemap = new Map();
@@ -22,8 +24,13 @@ public class Movement
 		if (map[(gy/48)*data.WIDTH+((gx+48)/48)] == 5)
 		{
 			System.out.println("Change map...");
+			
 			Gamedata.CurrentLevel=3;
 			gx = 50;
+			sx = 500;
+			wx = 600;
+			wy = wy+120;
+			sy = sy+120;
 			//Map.level = "data/texturemap3";
 		}
 		if (map[(gy/48)*data.WIDTH+((gx)/48)] == 4)
@@ -31,18 +38,18 @@ public class Movement
 			System.out.println("Change map...");
 			Gamedata.CurrentLevel=2;
 			gx = 768-(48*2)-5;
+			wx = 900;
 			//Map.level = "data/texturemap3";
 		}
 		
 		xvel=0;
 		yvel=0;
 	 
-		if ((gx+96) >= wx)
+		if ((gx+96) >= sx)
 		{
-			System.out.println("WOLF!!!!");
 			// (TODO)
 			// game.setScreen(game.level2);
-			wx++;
+			sx++;
 		}
 		
 		/* Walking to the right. */

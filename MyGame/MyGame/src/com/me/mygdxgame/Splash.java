@@ -17,14 +17,14 @@ public class Splash implements Screen
 	{
 		this.game = game;
 	}
-	Gamedata data = new Gamedata();
+	//Gamedata data = new Gamedata();
 	
 	@Override
 	public void render (float delta)
 	{
 		GL20 gl = Gdx.graphics.getGL20();
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+		Gamedata.CurrentLevel = 0;
 		spriteBatch.begin();
 		spriteBatch.draw(logo, 0, 0);
 		spriteBatch.end();
@@ -35,8 +35,9 @@ public class Splash implements Screen
 	{
 		if(Gdx.input.justTouched())
 		{
-			data.CurrentLevel = 0;
+			Gamedata.CurrentLevel = 0;
 			game.setScreen(game.mainMenu);
+			//MainMenu.create();
 		}
 	}
 	

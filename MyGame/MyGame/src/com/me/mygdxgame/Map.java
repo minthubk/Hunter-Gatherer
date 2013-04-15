@@ -14,7 +14,6 @@ public class Map
 	
 	public int[] StringToInt()
 	{
-		//System.out.println(Gamedata.CurrentLevel);
 		if(Gamedata.CurrentLevel == 3)
 		{
 			level = "data/texturemap3";

@@ -18,6 +18,7 @@ public class Level1 implements Screen
 	OrthographicCamera camera;
 	SpriteBatch batch;
 	Texture Log;
+	Texture Stone;
 	Texture Gubbe;
 	Texture House;
 	Texture Wolf;
@@ -25,12 +26,15 @@ public class Level1 implements Screen
 	Texture Grass;
 	Texture Road;
 	Texture Tree;
+	Texture Sheep;
 	Array<Rectangle> logs;
 	Rectangle gubbe;
 	Rectangle pekare;
 	Rectangle grass;
 	Rectangle wolf;
+	Rectangle sheep;
 	Rectangle tree;
+	Rectangle stone;
 	Rectangle road;
 	Rectangle house;
 		
@@ -89,7 +93,7 @@ public class Level1 implements Screen
 		}
 		
 		batch.draw(Gubbe, gubbe.x, gubbe.y);
-		
+		batch.draw(Sheep, sheep.x,sheep.y);
 		batch.draw(Wolf, wolf.x, wolf.y);
 		
 		if(Gdx.input.isTouched())
@@ -108,11 +112,15 @@ public class Level1 implements Screen
 		movement.py = (int)pekare.y;
 		movement.wx = (int)wolf.x;
 		movement.wy = (int)wolf.y;
+		movement.sx = (int)sheep.x;
+		movement.sy = (int)sheep.y;
 		
 		movement.collision();
 		
 		wolf.x = movement.wx;
 		wolf.y = movement.wy;
+		sheep.x = movement.sx;
+		sheep.y = movement.sy;
 		gubbe.x = movement.gx;
 		gubbe.y = movement.gy;
 		pekare.x = movement.px;
@@ -153,10 +161,20 @@ public class Level1 implements Screen
 		gubbe.height = 48;
 		
 		wolf = new Rectangle();
-		wolf.x = 768-48;
+		wolf.x = 768+100;
 		wolf.y = 480/2;
 		wolf.width = 48;
 		wolf.height = 48;
+		
+		sheep = new Rectangle();
+		sheep.x = 768-48;
+		sheep.y = 480/2;
+		sheep.width = 48;
+		sheep.height = 48;
+		
+		stone = new Rectangle();
+		stone.width = 48;
+		stone.height = 96;
 		
 		pekare = new Rectangle();
 		pekare.x = gubbe.x;
@@ -191,6 +209,7 @@ public class Level1 implements Screen
 		Tree  = new Texture(Gdx.files.internal("data/tree.png"));
 		House = new Texture(Gdx.files.internal("data/hus.png"));
 		Wolf = new Texture(Gdx.files.internal("data/wolfleft.png"));
+		Sheep = new Texture(Gdx.files.internal("data/sheep.png"));
 		
 		Grass = new Texture(Gdx.files.internal ("data/grass.png"));
 		Grass.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);

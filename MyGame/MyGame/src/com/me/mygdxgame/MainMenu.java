@@ -5,11 +5,12 @@
 
 package com.me.mygdxgame;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 
 public class MainMenu implements Screen
 {	
@@ -18,6 +19,9 @@ public class MainMenu implements Screen
 	private Texture info;
 	private Texture exitgame;
 	private SpriteBatch spriteBatch;
+	
+	float xpos;
+	float ypos;
 	
 	private MyGdxGame game;
 	public MainMenu (MyGdxGame game)
@@ -30,7 +34,7 @@ public class MainMenu implements Screen
 	Map gamemap = new Map();
 	
 	@Override
-	public void render (float delta)
+	public void render(float delta)
 	{
 		GL20 gl = Gdx.graphics.getGL20();
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -40,29 +44,59 @@ public class MainMenu implements Screen
 		spriteBatch.draw(info, 280, 210);
 		spriteBatch.draw(exitgame, 280, 90);
 		spriteBatch.end();
-		
+		Gamedata.CurrentLevel = 0;
 		handleInput();
 	}
 	
+	//MENU
 	private void handleInput()
 	{
-		if(Gdx.input.justTouched())
+		if(Gdx.input.isTouched())
+		{
+			Vector3 touchPos = new Vector3();
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			xpos = touchPos.x;
+			ypos = touchPos.y;
+		}
+		
+		if(xpos < 472 && xpos > 280 && ypos < 390 && ypos > 294)
+		{
+			//EXIT
+			Gdx.app.exit();
+		}
+		if(xpos < 472 && xpos > 280 && ypos < 270 && ypos > 184)
+		{
+			//INFO
+			// ...
+		}
+		if(xpos < 472 && xpos > 280 && ypos < 160 && ypos > 64)
+		{
+			//STARTGAME
+			System.out.println("STARTGAME");
+			Gamedata.CurrentLevel = 2;
+			game.setScreen(gameScreen);
+			
+		}
+		
+		/*if(Gdx.input.justTouched())
 		{
 			System.out.printf("Changing to game screen.. \n");
 			Gamedata.CurrentLevel = 2;
 			//Map.level = "data/texturemap2";
 			game.setScreen(gameScreen);
-		}
+		}*/
 	}
 	
 	@Override
     public void show() 
 	{
+		
 		background = new Texture ( Gdx.files.internal("data/background.png"));
 		startgame = new Texture ( Gdx.files.internal("data/startgame.png"));
 		info = new Texture ( Gdx.files.internal("data/info.png"));
 		exitgame = new Texture ( Gdx.files.internal("data/exit.png"));
 		spriteBatch = new SpriteBatch();
+		
     }
 	
     @Override
@@ -88,4 +122,4 @@ public class MainMenu implements Screen
     public void dispose() 
     {
     }
-}
+} 
