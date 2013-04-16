@@ -36,6 +36,8 @@ public class MainMenu implements Screen
 	@Override
 	public void render(float delta)
 	{
+		xpos = 0;
+		ypos = 0;
 		GL20 gl = Gdx.graphics.getGL20();
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		spriteBatch.begin();
