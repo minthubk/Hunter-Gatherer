@@ -14,6 +14,7 @@ public class MyGdxGame extends Game implements ApplicationListener, InputProcess
 	MainMenu mainMenu;
 	Level2 level2;
 	Map gamemap;
+	GameOver gameover;
 	
 	@Override
 	public void create()
@@ -23,8 +24,9 @@ public class MyGdxGame extends Game implements ApplicationListener, InputProcess
 		level2 = new Level2(this);
 		mainMenu =  new MainMenu(this);
 		gamemap = new Map();
+		gameover = new GameOver(this);
 		Texture.setEnforcePotImages(false);
-		setScreen(splashScreen);	
+		setScreen(splashScreen);
 		Gdx.input.setInputProcessor(this);
 		Gdx.input.setCatchBackKey(true);
 	}

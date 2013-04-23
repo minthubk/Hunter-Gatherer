@@ -2,6 +2,7 @@
 
 package com.me.mygdxgame;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -46,6 +47,7 @@ public class Level1 implements Screen
 		this.game = game;
 	}
 	
+	GameOver gameover = new GameOver(game);
 	Gamedata data = new Gamedata();
 	Map gamemap = new Map();
 	Movement movement = new Movement();
@@ -95,6 +97,7 @@ public class Level1 implements Screen
 		batch.draw(Gubbe, gubbe.x, gubbe.y);
 		batch.draw(Sheep, sheep.x,sheep.y);
 		batch.draw(Wolf, wolf.x, wolf.y);
+		batch.draw(Stone, stone.x, stone.y);
 		
 		if(Gdx.input.isTouched())
 		{
@@ -114,6 +117,8 @@ public class Level1 implements Screen
 		movement.wy = (int)wolf.y;
 		movement.sx = (int)sheep.x;
 		movement.sy = (int)sheep.y;
+		movement.stonex = (int)stone.x;
+		movement.stoney = (int)stone.y;
 		
 		movement.collision();
 		
@@ -125,6 +130,8 @@ public class Level1 implements Screen
 		gubbe.y = movement.gy;
 		pekare.x = movement.px;
 		pekare.y = movement.py;
+		stone.x = movement.stonex;
+		stone.y = movement.stoney;
 		
 		batch.end();
 		
@@ -141,7 +148,7 @@ public class Level1 implements Screen
 		}
 		*/
 	}
-
+	
 	@Override
 	public void resize(int width, int height) 
 	{
@@ -175,6 +182,8 @@ public class Level1 implements Screen
 		stone = new Rectangle();
 		stone.width = 48;
 		stone.height = 96;
+		stone.x = 768+100;
+		stone.y = 480/2;
 		
 		pekare = new Rectangle();
 		pekare.x = gubbe.x;
@@ -206,6 +215,7 @@ public class Level1 implements Screen
 		Gubbe = new Texture(Gdx.files.internal("data/gubbe.png"));
 		Road = new Texture(Gdx.files.internal("data/road.png"));
 		Pekare = new Texture(Gdx.files.internal("pekare.png"));
+		Stone = new Texture(Gdx.files.internal("data/stone.png"));
 		Tree  = new Texture(Gdx.files.internal("data/tree.png"));
 		House = new Texture(Gdx.files.internal("data/hus.png"));
 		Wolf = new Texture(Gdx.files.internal("data/wolfleft.png"));
@@ -218,6 +228,7 @@ public class Level1 implements Screen
 		House.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Gubbe.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Road.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Stone.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Pekare.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Grass.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		Tree.setFilter(TextureFilter.Linear, TextureFilter.Linear);

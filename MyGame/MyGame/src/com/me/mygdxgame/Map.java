@@ -12,14 +12,29 @@ public class Map
 	private String fileContent;
 	public static String level;
 	
-	public int[] StringToInt()
+	public void Levels()
 	{
+		if(Gamedata.CurrentLevel == 2)
+		{
+			level = "data/texturemap2";
+		}
 		if(Gamedata.CurrentLevel == 3)
 		{
 			level = "data/texturemap3";
 		}
-		else
-			level = "data/texturemap2";
+		if(Gamedata.CurrentLevel == 4)
+		{
+			level = "data/texturemap4";
+		}
+		if(Gamedata.CurrentLevel == 5)
+		{
+			level = "data/texturemap5";
+		}
+	}
+	
+	public int[] StringToInt()
+	{
+		Levels();
 		
 		FileHandle handle = Gdx.files.internal(level);
 		fileContent = handle.readString();

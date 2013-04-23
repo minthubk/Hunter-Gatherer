@@ -1,4 +1,3 @@
-
 package com.me.mygdxgame;
 
 import com.badlogic.gdx.Gdx;
@@ -7,12 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Splash implements Screen
+public class GameOver implements Screen
 {
-	private Texture logo;
+	private Texture gameover;
 	private SpriteBatch spriteBatch;
 	private MyGdxGame game;
-	public Splash (MyGdxGame game)
+	public GameOver (MyGdxGame game)
 	{
 		this.game = game;
 	}
@@ -25,7 +24,7 @@ public class Splash implements Screen
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gamedata.CurrentLevel = 0;
 		spriteBatch.begin();
-		spriteBatch.draw(logo, 0, 0);
+		spriteBatch.draw(gameover, 0, 0);
 		spriteBatch.end();
 		handleInput();
 	}
@@ -43,7 +42,7 @@ public class Splash implements Screen
 	@Override
     public void show()
 	{
-    	logo = new Texture ( Gdx.files.internal("data/splash.png"));
+    	gameover = new Texture ( Gdx.files.internal("data/gameover.png"));
 		spriteBatch = new SpriteBatch();
     }
 
@@ -57,21 +56,17 @@ public class Splash implements Screen
    {
    }
 
-
    @Override
    public void pause() 
    {
    }
-
 
    @Override
    public void resume() 
    {
    }
 
-
    public void dispose() 
    {
-   }
-	
+   }	
 }

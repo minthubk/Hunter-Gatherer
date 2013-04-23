@@ -1,7 +1,3 @@
-/* http://steigert.blogspot.se/2012/03/4-libgdx-tutorial-tablelayout.html
- * 
- *  (TODO) Menu 
-*/
 
 package com.me.mygdxgame;
 
@@ -42,9 +38,9 @@ public class MainMenu implements Screen
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		spriteBatch.begin();
 		spriteBatch.draw(background, 0, 0);
-		spriteBatch.draw(startgame, 280, 330);
-		spriteBatch.draw(info, 280, 210);
-		spriteBatch.draw(exitgame, 280, 90);
+		spriteBatch.draw(startgame, 134, 330);
+		spriteBatch.draw(info, 134, 210);
+		spriteBatch.draw(exitgame, 134, 90);
 		spriteBatch.end();
 		Gamedata.CurrentLevel = 0;
 		handleInput();
@@ -61,17 +57,17 @@ public class MainMenu implements Screen
 			ypos = touchPos.y;
 		}
 		
-		if(xpos < 472 && xpos > 280 && ypos < 390 && ypos > 294)
+		if(xpos < 680 && xpos > 180 && ypos < 390 && ypos > 290)
 		{
 			//EXIT
 			Gdx.app.exit();
 		}
-		if(xpos < 472 && xpos > 280 && ypos < 270 && ypos > 184)
+		if(xpos < 680 && xpos > 180 && ypos < 270 && ypos > 180)
 		{
 			//INFO
 			// ...
 		}
-		if(xpos < 472 && xpos > 280 && ypos < 160 && ypos > 64)
+		if(xpos < 680 && xpos > 180 && ypos < 160 && ypos > 60)
 		{
 			//STARTGAME
 			System.out.println("STARTGAME");
